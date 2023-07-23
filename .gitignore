@@ -1,0 +1,7 @@
+# Temporary files
+.netrwhist
+*.swp
+
+# Plugins
+/pack/
+
