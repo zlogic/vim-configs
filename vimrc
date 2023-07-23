@@ -1,7 +1,5 @@
 set number
 set linebreak
-set showbreak=+++
-set textwidth=100
 set showmatch
  
 set hlsearch
@@ -18,13 +16,15 @@ set softtabstop=4
 set ruler
 
 " Enable syntax highlighting
-syntax on
+syntax enable
 
 " Enable filetype plugins
-filetype plugin on
+filetype plugin indent on
 
 " Shortcuts
 imap <tab><tab> <c-x><c-o>
 
 " Load configs
 runtime go.vim
+runtime rust.vim
+
