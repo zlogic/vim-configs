@@ -21,6 +21,10 @@ syntax enable
 " Enable filetype plugins
 filetype plugin indent on
 
+" Command autocompletion
+set wildmenu
+set wildmode=longest:full,full
+
 " Shortcuts
 imap <tab><tab> <c-x><c-o>
 
