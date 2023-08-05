@@ -27,6 +27,7 @@ set wildmode=longest:full,full
 
 " Shortcuts
 imap <tab><tab> <c-x><c-o>
+nmap <c-]> :ALEGoToDefinition<CR>
 
 " Enable code completion
 set omnifunc=ale#completion#OmniFunc
@@ -43,11 +44,10 @@ let g:ale_fixers = {
 	    \'go': ['goimports', 'gofmt', 'trim_whitespace', 'remove_trailing_lines']
 	    \}
 
-" Format on save
-let g:rustfmt_autosave = 1
-
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 " Rust options
 autocmd BufNewFile,BufRead *.rs set filetype=rust
+let g:rustfmt_autosave = 1
+
