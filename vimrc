@@ -40,9 +40,13 @@ let g:ale_linters = {
 	    \'go': ['gopls', 'golangci-lint', 'gofmt'],
 	    \}
 let g:ale_fixers = {
-	    \'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
-	    \'go': ['goimports', 'gofmt', 'trim_whitespace', 'remove_trailing_lines']
+	    \'*': ['trim_whitespace', 'remove_trailing_lines'],
+	    \'rust': ['rustfmt'],
+	    \'go': ['goimports', 'gofmt']
 	    \}
+
+" Disable confusing autocomments
+let g:ale_virtualtext_cursor = 'current'
 
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
