@@ -26,8 +26,10 @@ set wildmenu
 set wildmode=longest:full,full
 
 " Shortcuts
-imap <tab><tab> <c-x><c-o>
-nmap <c-]> :ALEGoToDefinition<CR>
+" imap <tab><tab> <c-x><c-o>
+nmap <silent> <c-]> <Plug>(ale_go_to_definition)
+nmap <silent> <C-k> <Plug>(ale_previous)
+nmap <silent> <C-j> <Plug>(ale_next)
 
 " Enable code completion
 set omnifunc=ale#completion#OmniFunc
