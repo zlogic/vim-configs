@@ -33,6 +33,8 @@ nmap <c-]> :ALEGoToDefinition<CR>
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
 set completeopt=menu,menuone,preview,noselect,noinsert
+" Show symbol information in a popup window
+" set completeopt=menu,menuone,popup,noselect,noinsert
 
 " Set ALE linter settings
 let g:ale_linters = {
