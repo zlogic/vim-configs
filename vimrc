@@ -46,7 +46,7 @@ let g:ale_fixers = {
 	    \}
 
 " Disable confusing autocomments
-let g:ale_virtualtext_cursor = 'current'
+let g:ale_virtualtext_cursor = 'auto'
 
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
