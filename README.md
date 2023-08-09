@@ -25,6 +25,12 @@ Go requires the [gopls](https://github.com/golang/tools) language server to be i
 go install golang.org/x/tools/gopls@latest
 ```
 
+In addition, the [staticcheck](https://github.com/dominikh/go-tools) liner should be installed as well:
+
+```shell
+go install honnef.co/go/tools/cmd/staticcheck@2023.1.3
+```
+
 ## Rust
 
 Rust requires the [rust-analyzer](https://github.com/rust-lang/rust-analyzer) to be installed.
