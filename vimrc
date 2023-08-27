@@ -1,18 +1,18 @@
 set number
 set linebreak
 set showmatch
- 
+
 set hlsearch
 set smartcase
 set ignorecase
 set incsearch
- 
+
 set autoindent
 set shiftwidth=4
 set smartindent
 set smarttab
 set softtabstop=4
- 
+
 set ruler
 
 " Enable syntax highlighting
@@ -52,10 +52,13 @@ let g:ale_fixers = {
 " Disable confusing autocomments
 let g:ale_virtualtext_cursor = 'auto'
 
+" Automatically fix (format) files on save
+let g:ale_fix_on_save = 1
+" Or disable/enable ALE conditionally?
+" let g:ale_pattern_options= {'\.go$': {'ale_enabled': 0}}
+
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 " Rust options
 autocmd BufNewFile,BufRead *.rs set filetype=rust
-let g:rustfmt_autosave = 1
-
