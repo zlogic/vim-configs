@@ -27,7 +27,8 @@ set wildmode=longest:full,full
 
 " Shortcuts
 " imap <tab><tab> <c-x><c-o>
-nmap <silent> <c-]> <Plug>(ale_go_to_definition_in_tab)
+nmap <silent> <C-]> <Plug>(ale_go_to_definition)
+nmap <silent> <C-W><C-]> <Plug>(ale_go_to_definition_in_tab)
 nmap <silent> <C-k> <Plug>(ale_previous)
 nmap <silent> <C-j> <Plug>(ale_next)
 
