@@ -44,7 +44,7 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 " Set ALE linter settings
 let g:ale_linters = {
 	    \'rust': ['analyzer'],
-	    \'go': ['gopls', 'staticcheck', 'gofmt'],
+	    \'go': ['gopls', 'staticcheck', 'gofmt', 'govet'],
 	    \}
 let g:ale_fixers = {
 	    \'*': ['trim_whitespace', 'remove_trailing_lines'],
