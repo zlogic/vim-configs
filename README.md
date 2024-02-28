@@ -39,3 +39,6 @@ Rust requires the [rust-analyzer](https://github.com/rust-lang/rust-analyzer) to
 rustup component add rust-analyzer
 ```
 
+## Neovim branch
+
+There's also a [Neovim](../../tree/neovim) branch, but it's less actively maintained (I ended up preferring Vim + ALE).
