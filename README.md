@@ -1,22 +1,15 @@
-# Vim configs
+# Neovim configs
 
-This repo contains my `.vim` directory.
+This repo contains my `~/.config/nvim` directory.
 
 For language support and other features, plugins are required:
 
-* [lsp](https://github.com/yegappan/lsp)
-* ~~[ALE](https://github.com/dense-analysis/ale)~~
-* ~~[vim-go](https://github.com/fatih/vim-go)~~
-* [rust-vim](https://github.com/rust-lang/rust.vim)
-
+* [lspconfig](https://github.com/neovim/nvim-lspconfig)
 
 Install them by running
 
 ```shell
-# git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
-git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
-# git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/plugins/start/ale
-git clone https://github.com/yegappan/lsp.git ~/.vim/pack/downloads/opt/lsp
+git clone https://github.com/neovim/nvim-lspconfig.git ~/.config/nvim/pack/plugins/start/lspconfig
 ```
 
 ## Go
@@ -40,7 +33,3 @@ Rust requires the [rust-analyzer](https://github.com/rust-lang/rust-analyzer) to
 ```shell
 rustup component add rust-analyzer
 ```
-
-## Neovim branch
-
-There's also a [Neovim](../../tree/neovim) branch, but it's less actively maintained (I ended up preferring Vim + LSP).
