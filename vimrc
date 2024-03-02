@@ -30,6 +30,15 @@ nmap <silent> <C-]> <Plug>(ale_go_to_definition)
 nmap <silent> <C-W><C-]> <Plug>(ale_go_to_definition_in_tab)
 nmap <silent> <C-k> <Plug>(ale_previous)
 nmap <silent> <C-j> <Plug>(ale_next)
+nmap <silent> gd <Plug>(ale_go_to_definition)
+nmap <silent> gD <Plug>(ale_go_to_declaration)
+nmap <silent> <C-W>gd <Plug>(ale_go_to_definition_in_tab)
+nmap <silent> gr :ALEFindReferences -quickfix <CR>
+nmap <silent> [d <Plug>(ale_previous)
+nmap <silent> ]d <Plug>(ale_next)
+nmap <silent> K <Plug>(ale_hover)
+nmap <silent> <space>ca <Plug>(ale_code_action)
+nmap <silent> <space>rn <Plug>(ale_rename)
 
 " noremap Y "+y
 " nnoremap YY "+yy
