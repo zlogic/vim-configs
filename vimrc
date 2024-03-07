@@ -63,9 +63,6 @@ let g:ale_fixers = {
 
 " Show virtual text column for current line only
 let g:ale_virtualtext_cursor = 1
-" Use virtual text styles from an older version
-highlight link ALEVirtualTextError SpellBad
-highlight link ALEVirtualTextWarning SpellCap
 
 " Automatically fix (format) files on save
 let g:ale_fix_on_save = 1
