@@ -66,8 +66,13 @@ let g:ale_virtualtext_cursor = 1
 
 " Automatically fix (format) files on save
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_insert_leave = 1
+" let g:ale_lint_on_text_changed = 'always'
 " Or disable/enable ALE conditionally?
 " let g:ale_pattern_options= {'\.go$': {'ale_enabled': 0}}
+
+" Fix for https://github.com/dense-analysis/ale/issues/4642
+" set ttimeoutlen=100
 
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
