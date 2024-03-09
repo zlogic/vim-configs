@@ -73,6 +73,12 @@ let g:ale_lint_on_insert_leave = 1
 
 " Fix for https://github.com/dense-analysis/ale/issues/4642
 " set ttimeoutlen=100
+"augroup FastEscape
+"    autocmd!
+"    au InsertEnter * set timeoutlen=0
+"    au InsertLeave * set timeoutlen=1000
+"augroup END
+inoremap <C-c> <Esc>
 
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
