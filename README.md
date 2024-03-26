@@ -28,7 +28,13 @@ go install golang.org/x/tools/gopls@latest
 In addition, the [staticcheck](https://github.com/dominikh/go-tools) linter should be installed as well:
 
 ```shell
-go install honnef.co/go/tools/cmd/staticcheck@2023.1.3
+go install honnef.co/go/tools/cmd/staticcheck@2023.1.7
+```
+
+To install [golangci-lint](https://github.com/golangci/golangci-lint), run:
+
+```shell
+curl -LJ -o - https://github.com/golangci/golangci-lint/releases/download/v1.57.1/golangci-lint-1.57.1-darwin-arm64.tar.gz | tar xv --strip-components=1 --include=\*/golangci-lint -C ~/go/bin
 ```
 
 ## Rust

@@ -53,7 +53,7 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 " Set ALE linter settings
 let g:ale_linters = {
 	    \'rust': ['analyzer'],
-	    \'go': ['gopls', 'staticcheck', 'gofmt', 'govet'],
+	    \'go': ['gopls', 'staticcheck', 'gofmt', 'govet', 'golangci-lint'],
 	    \}
 let g:ale_fixers = {
 	    \'*': ['trim_whitespace', 'remove_trailing_lines'],
