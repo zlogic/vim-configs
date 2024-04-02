@@ -18,6 +18,9 @@ set ruler
 " Enable syntax highlighting
 syntax enable
 
+" Enable lsp plugin
+packadd lsp
+
 " Enable filetype plugins
 filetype plugin indent on
 
@@ -26,59 +29,63 @@ set wildmenu
 set wildmode=longest:full,full
 
 " Shortcuts
-nmap <silent> <C-]> <Plug>(ale_go_to_definition)
-nmap <silent> <C-W><C-]> <Plug>(ale_go_to_definition_in_tab)
-nmap <silent> <C-k> <Plug>(ale_previous)
-nmap <silent> <C-j> <Plug>(ale_next)
-nmap <silent> gd <Plug>(ale_go_to_definition)
-nmap <silent> gD <Plug>(ale_go_to_declaration)
-nmap <silent> <C-W>gd <Plug>(ale_go_to_definition_in_tab)
-nmap <silent> gr :ALEFindReferences -quickfix <CR>
-nmap <silent> [d <Plug>(ale_previous)
-nmap <silent> ]d <Plug>(ale_next)
-nmap <silent> K <Plug>(ale_hover)
-nmap <silent> <space>ca <Plug>(ale_code_action)
-nmap <silent> <space>rn <Plug>(ale_rename)
+nmap <silent> <C-]> :LspGotoDefinition<CR>
+nmap <silent> <C-W><C-]> :tab LspGotoDefinition<CR>
+nmap <silent> <C-k> :LspDiag prev<CR>
+nmap <silent> <C-j> :LspDiag next<CR>
+nmap <silent> gd :LspGotoDefinition<CR>
+nmap <silent> gD :LspGotoDeclaration<CR>
+nmap <silent> <C-W>gd :tab LspGotoDefinition<CR>
+nmap <silent> gr :LspShowReferences<CR>
+nmap <silent> [d :LspDiag prev<CR>
+nmap <silent> ]d :LspDiag next<CR>
+nmap <silent> <space>ca :LspCodeAction<CR>
+nmap <silent> <space>rn :LspRename<CR>
 
 " noremap Y "+y
 " nnoremap YY "+yy
 
-" Enable code completion
-set omnifunc=ale#completion#OmniFunc
-let g:ale_completion_enabled = 1
-set completeopt=menu,menuone,preview,noselect,noinsert
+" Show autocomplete description in preview pane
+" set completeopt=menu,menuone,preview,noselect,noinsert
 " Show symbol information in a popup window
-" set completeopt=menu,menuone,popup,noselect,noinsert
+set completeopt=menu,menuone,popup,noselect,noinsert
 
-" Set ALE linter settings
-let g:ale_linters = {
-	    \'rust': ['analyzer'],
-	    \'go': ['gopls', 'staticcheck', 'gofmt', 'govet', 'golangci-lint'],
-	    \}
-let g:ale_fixers = {
-	    \'*': ['trim_whitespace', 'remove_trailing_lines'],
-	    \'rust': ['rustfmt'],
-	    \'go': ['goimports', 'gofmt']
-	    \}
+" Set LSP settings
+call LspOptionsSet(#{
+    \hoverInPreview: v:false,
+    \autoComplete: v:false,
+    \omniComplete: v:true,
+    \showDiagWithVirtualText: v:true,
+\})
+call LspAddServer([#{
+    \name: 'rustanalyzer',
+    \filetype: ['rust'],
+    \path: 'rust-analyzer',
+    \args: [],
+    \syncInit: v:true,
+\}])
+call LspAddServer([#{name: 'gopls',
+    \filetype: 'go',
+    \path: 'gopls',
+    \args: ['serve']
+\}])
+call LspAddServer([#{name: 'go-staticcheck',
+    \filetype: 'go',
+    \path: 'staticcheck',
+    \args: [],
+\}])
+call LspAddServer([#{name: 'golangci-lint',
+    \filetype: 'go',
+    \path: 'golangci-lint',
+    \args: ['--fast'],
+\}])
 
-" Show virtual text column for current line only
-let g:ale_virtualtext_cursor = 1
-
-" Automatically fix (format) files on save
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_insert_leave = 1
-" let g:ale_lint_on_text_changed = 'always'
-" Or disable/enable ALE conditionally?
-" let g:ale_pattern_options= {'\.go$': {'ale_enabled': 0}}
-
-" Fix for https://github.com/dense-analysis/ale/issues/4642
-" set ttimeoutlen=100
-"augroup FastEscape
-"    autocmd!
-"    au InsertEnter * set timeoutlen=0
-"    au InsertLeave * set timeoutlen=1000
-"augroup END
-inoremap <C-c> <Esc>
+" Enable hover on K
+set keywordprg=:LspHover
+" Format on save
+augroup lsp_format
+    autocmd! BufWritePre *.go,*.rs :LspFormat
+augroup END
 
 " Go options
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
