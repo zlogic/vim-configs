@@ -43,4 +43,4 @@ rustup component add rust-analyzer
 
 ## Neovim branch
 
-There's also a [Neovim](../../tree/neovim) branch, but it's less actively maintained (I ended up preferring Vim + ALE/LSP).
+There's also a [Neovim](../../tree/neovim) branch, but it's less actively maintained (I ended up preferring Vim + LSP).

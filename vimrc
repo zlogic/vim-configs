@@ -47,8 +47,10 @@ nmap <silent> <space>rn :LspRename<CR>
 
 " Show autocomplete description in preview pane
 " set completeopt=menu,menuone,preview,noselect,noinsert
+" au CompleteDone * pclose
 " Show symbol information in a popup window
 set completeopt=menu,menuone,popup,noselect,noinsert
+set completepopup=align:item,border:off
 
 " Set LSP settings
 call LspOptionsSet(#{
