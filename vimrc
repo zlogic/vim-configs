@@ -56,6 +56,7 @@ call LspOptionsSet(#{
     \autoComplete: v:false,
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
+    \ignoreMissingServer: v:true,
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
@@ -65,19 +66,16 @@ call LspAddServer([#{
     \syncInit: v:true,
 \}])
 call LspAddServer([#{name: 'gopls',
-    \filetype: 'go',
-    \path: 'gopls',
-    \args: ['serve']
-\}])
-call LspAddServer([#{name: 'go-staticcheck',
-    \filetype: 'go',
-    \path: 'staticcheck',
-    \args: [],
-\}])
-call LspAddServer([#{name: 'golangci-lint',
-    \filetype: 'go',
-    \path: 'golangci-lint',
-    \args: ['--fast'],
+    \filetype: ['go', 'gomod'],
+    \path: expand('$HOME/go/bin/gopls'),
+    \args: ['serve'],
+    \syncInit: v:true,
+    \workspaceConfig: #{
+    \    gopls: #{
+    \        staticcheck: v:true,
+    \        gofumpt: v:true,
+    \    }
+    \}
 \}])
 
 " Enable hover on K
