@@ -50,7 +50,7 @@ nmap <silent> <space>rn :LspRename<CR>
 " au CompleteDone * pclose
 " Show symbol information in a popup window
 set completeopt=menu,menuone,popup,noselect,noinsert
-set completepopup=align:item,border:off
+set completepopup=align:menu,border:off
 
 " Set LSP settings
 call LspOptionsSet(#{
