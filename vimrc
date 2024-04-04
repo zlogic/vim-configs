@@ -29,19 +29,6 @@ set wildmenu
 set wildmode=longest:full,full
 
 " Shortcuts
-nmap <silent> <C-]> :LspGotoDefinition<CR>
-nmap <silent> <C-W><C-]> :tab LspGotoDefinition<CR>
-nmap <silent> <C-k> :LspDiag prev<CR>
-nmap <silent> <C-j> :LspDiag next<CR>
-nmap <silent> gd :LspGotoDefinition<CR>
-nmap <silent> gD :LspGotoDeclaration<CR>
-nmap <silent> <C-W>gd :tab LspGotoDefinition<CR>
-nmap <silent> gr :LspShowReferences<CR>
-nmap <silent> [d :LspDiag prev<CR>
-nmap <silent> ]d :LspDiag next<CR>
-nmap <silent> <space>ca :LspCodeAction<CR>
-nmap <silent> <space>rn :LspRename<CR>
-
 " noremap Y "+y
 " nnoremap YY "+yy
 
@@ -53,12 +40,15 @@ set completeopt=menu,menuone,popup,noselect,noinsert
 set completepopup=align:menu,border:off
 
 " Set LSP settings
+" The default diagVirtualTextAlign: 'above' option needs
+" a fix from https://github.com/vim/vim/issues/14049
 call LspOptionsSet(#{
     \hoverInPreview: v:false,
     \autoComplete: v:false,
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
     \ignoreMissingServer: v:true,
+    \diagVirtualTextAlign: 'below',
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
@@ -80,11 +70,37 @@ call LspAddServer([#{name: 'gopls',
     \}
 \}])
 
-" Enable hover on K
-set keywordprg=:LspHover
-" Format on save
-augroup lsp_format
-    autocmd! BufWritePre *.go,*.rs :LspFormat
+function! s:on_lsp_buffer_attached() abort
+    " Shortcuts
+    "nmap <silent> <C-]> <Cmd>LspGotoDefinition<CR>
+    "nmap <silent> <C-W><C-]> :tab LspGotoDefinition<CR>
+    nnoremap <buffer> gd <Cmd>LspGotoDefinition<CR>
+    nnoremap <buffer> gD <Cmd>LspGotoDeclaration<CR>
+    nnoremap <buffer> <C-W>gd :tab LspGotoDefinition<CR>
+    nnoremap <buffer> gi <Cmd>LspGotoImpl<CR>
+    nnoremap <buffer> gr <Cmd>LspShowReferences<CR>
+    nnoremap <buffer> [d <Cmd>LspDiag prev<CR>
+    nnoremap <buffer> ]d <Cmd>LspDiag next<CR>
+    nnoremap <buffer> <space>ca <Cmd>LspCodeAction<CR>
+    nnoremap <buffer> <space>rn <Cmd>LspRename<CR>
+    nnoremap <buffer> <space>e <Cmd>LspDiagCurrent<CR>
+    nnoremap <buffer> <space>q <Cmd>LspDiagShow<CR>
+
+    " Enable hover on K
+    set keywordprg=:LspHover
+    " Go to definition with LSP
+    setlocal tagfunc=lsp#lsp#TagFunc
+    " Set default formatter on gq
+    setlocal formatexpr=lsp#lsp#FormatExpr()
+    " Format on save
+    augroup lsp_format
+	autocmd! BufWritePre *.go,*.rs :LspFormat
+    augroup END
+endfunction
+
+augroup lsp_install
+    au!
+    autocmd User LspAttached call s:on_lsp_buffer_attached()
 augroup END
 
 " Go options
