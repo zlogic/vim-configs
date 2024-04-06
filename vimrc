@@ -42,13 +42,13 @@ set completepopup=align:menu,border:off
 " Set LSP settings
 " The default diagVirtualTextAlign: 'above' option needs
 " a fix from https://github.com/vim/vim/issues/14049
+" Also, aligning below seems to offset the cursor line...
 call LspOptionsSet(#{
     \hoverInPreview: v:false,
     \autoComplete: v:false,
     \omniComplete: v:true,
-    \showDiagWithVirtualText: v:true,
+    \showDiagWithVirtualText: v:false,
     \ignoreMissingServer: v:true,
-    \diagVirtualTextAlign: 'below',
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
