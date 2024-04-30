@@ -29,6 +29,15 @@ lspconfig.gopls.setup({
     },
   },
 })
+lspconfig.rust_analyzer.setup{
+  settings = {
+    ['rust-analyzer'] = {
+      diagnostics = {
+        enable = true;
+      },
+    }
+  }
+}
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -46,6 +55,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client.server_capabilities.definitionProvider then
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
+
+    -- Disable advanced syntax highlighting
+    client.server_capabilities.semanticTokensProvider = nil
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
