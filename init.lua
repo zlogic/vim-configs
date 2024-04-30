@@ -17,6 +17,7 @@ vim.opt.expandtab = true
 
 vim.opt.wildmode = 'longest:full,full'
 -- vim.opt.wildoptions = 'pum,tagfile'
+vim.opt.completeopt = 'menu,longest,noinsert'
 
 -- vim.cmd.colorscheme('habamax')
 
