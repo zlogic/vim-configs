@@ -15,6 +15,9 @@ vim.opt.shiftwidth = 4
 -- vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
+vim.opt.wildmode = 'longest:full,full'
+-- vim.opt.wildoptions = 'pum,tagfile'
+
 -- vim.cmd.colorscheme('habamax')
 
 -- LSP configuration
