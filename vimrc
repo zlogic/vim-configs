@@ -1,3 +1,6 @@
+set noerrorbells
+set visualbell
+
 set number
 set linebreak
 set showmatch
@@ -33,11 +36,10 @@ set wildmode=longest:full,full
 " nnoremap YY "+yy
 
 " Show autocomplete description in preview pane
-" set completeopt=menu,menuone,preview,noselect,noinsert
-" au CompleteDone * pclose
+set completeopt=menu,menuone,preview,noselect,noinsert
 " Show symbol information in a popup window
-set completeopt=menu,menuone,popup,noselect,noinsert
-set completepopup=align:menu,border:off
+" set completeopt=menu,menuone,popup,noselect,noinsert
+" set completepopup=align:menu,border:off
 
 " Set LSP settings
 " The default diagVirtualTextAlign: 'above' option needs
@@ -49,6 +51,7 @@ call LspOptionsSet(#{
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:false,
     \ignoreMissingServer: v:true,
+    \completionMatcher: 'icase',
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
@@ -97,6 +100,9 @@ function! s:on_lsp_buffer_attached() abort
     augroup lsp_format
 	autocmd! BufWritePre *.go,*.rs :LspFormat
     augroup END
+
+    " Close preview window after completion
+    au CompleteDone * pclose
 endfunction
 
 augroup lsp_install
