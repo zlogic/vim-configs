@@ -44,7 +44,10 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 " Set LSP settings
 " The default diagVirtualTextAlign: 'above' option needs
 " a fix from https://github.com/vim/vim/issues/14049
+" (or just a newer Vim version?)
 " Also, aligning below seems to offset the cursor line...
+" Add this to get things like function parameter names:
+" showInlayHints: v:true,
 call LspOptionsSet(#{
     \hoverInPreview: v:false,
     \autoComplete: v:false,
