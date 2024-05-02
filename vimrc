@@ -85,7 +85,7 @@ function! s:on_lsp_buffer_attached() abort
     nnoremap <buffer> <C-W>gd :tab LspGotoDefinition<CR>
     nnoremap <buffer> gi <Cmd>LspGotoImpl<CR>
     nnoremap <buffer> gr <Cmd>LspShowReferences<CR>
-    nnoremap <buffer> pr <Cmd>LspPeekReferences<CR>
+    nnoremap <buffer> <space>pr <Cmd>LspPeekReferences<CR>
     nnoremap <buffer> [d <Cmd>LspDiag prev<CR>
     nnoremap <buffer> ]d <Cmd>LspDiag next<CR>
     nnoremap <buffer> <space>ca <Cmd>LspCodeAction<CR>
