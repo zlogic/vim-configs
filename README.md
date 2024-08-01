@@ -7,7 +7,7 @@ For language support and other features, plugins are required:
 * [lspconfig](https://github.com/neovim/nvim-lspconfig)
 * [telescope](https://github.com/nvim-telescope/telescope.nvim) and its dependencies:
   * [plenary](https://github.com/nvim-lua/plenary.nvim)
-* [nvim-cmp]()
+* [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 Install them by running
 
