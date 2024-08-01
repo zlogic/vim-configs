@@ -17,8 +17,7 @@ vim.opt.expandtab = true
 
 vim.opt.wildmode = 'longest:full,full'
 -- vim.opt.wildoptions = 'pum,tagfile'
--- TODO: switch from preview to popup when nvim adds options to change popup settings
-vim.opt.completeopt = 'menu,longest,noinsert,preview'
+vim.opt.completeopt = 'menu,longest,noinsert,popup'
 
 -- vim.cmd.colorscheme('habamax')
 
@@ -51,8 +50,6 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.diagnostic.config({ float = { border = 'single' } })
 require('lspconfig.ui.windows').default_options.border = 'single'
--- Restore nvim 0.9 (classic vim) style for popups and floating windows
--- vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -66,14 +63,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
 
-    -- Set rounded borders to separate from background
-    require('lspconfig.ui.windows').default_options.border = 'rounded'
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
-
     -- Disable advanced syntax highlighting
     -- client.server_capabilities.semanticTokensProvider = nil
-    vim.lsp.inlay_hint.enable(false)
+    vim.lsp.inlay_hint.enable(true)
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -110,6 +102,18 @@ vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
     vim.opt_local.tabstop = 4
     vim.opt_local.expandtab = false
     vim.opt_local.shiftwidth = 4
+  end
+})
+
+-- Set popup window background
+vim.api.nvim_create_autocmd('OptionSet', {
+  pattern = 'background',
+  callback = function()
+    if vim.o.background == 'light' then
+      vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 255 })
+    else
+      vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 232 })
+    end
   end
 })
 
