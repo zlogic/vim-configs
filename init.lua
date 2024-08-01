@@ -41,14 +41,17 @@ lspconfig.rust_analyzer.setup{
       diagnostics = {
         enable = true,
       },
-      inlayHints = true,
+      -- inlayHints = true,
     }
   }
 }
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-vim.diagnostic.config({ float = { border = 'single' } })
+vim.diagnostic.config({
+  float = { border = 'single' },
+  virtual_text = true
+})
 require('lspconfig.ui.windows').default_options.border = 'single'
 
 vim.api.nvim_create_autocmd('LspAttach', {
