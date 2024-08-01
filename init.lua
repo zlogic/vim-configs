@@ -17,7 +17,7 @@ vim.opt.expandtab = true
 
 vim.opt.wildmode = 'longest:full,full'
 -- vim.opt.wildoptions = 'pum,tagfile'
-vim.opt.completeopt = 'menu,longest,noinsert'
+vim.opt.completeopt = 'menu,longest,noinsert,preview'
 
 -- vim.cmd.colorscheme('habamax')
 
@@ -46,8 +46,6 @@ lspconfig.rust_analyzer.setup{
 }
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 vim.api.nvim_create_autocmd('LspAttach', {
