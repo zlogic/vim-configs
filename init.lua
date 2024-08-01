@@ -24,6 +24,8 @@ vim.opt.expandtab = true
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.gopls.setup({
   settings = {
     gopls = {
@@ -33,7 +35,8 @@ lspconfig.gopls.setup({
       semanticTokens = true,
       usePlaceholders = true,
     },
-  }
+  },
+  capabilities = capabilities,
 })
 lspconfig.rust_analyzer.setup{
   settings = {
