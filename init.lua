@@ -24,6 +24,8 @@ vim.opt.completeopt = 'menu,longest,noinsert,preview'
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 lspconfig.gopls.setup({
   settings = {
     gopls = {
@@ -39,7 +41,7 @@ lspconfig.rust_analyzer.setup{
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {
-        enable = true;
+        enable = true,
       },
     }
   }
