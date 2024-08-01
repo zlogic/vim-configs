@@ -65,7 +65,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Disable advanced syntax highlighting
     -- client.server_capabilities.semanticTokensProvider = nil
-    vim.lsp.inlay_hint.enable(true)
+    vim.lsp.inlay_hint.enable(false)
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
