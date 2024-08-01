@@ -15,9 +15,9 @@ vim.opt.shiftwidth = 4
 -- vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
-vim.opt.wildmode = 'longest:full,full'
+-- vim.opt.wildmode = 'longest:full,full'
 -- vim.opt.wildoptions = 'pum,tagfile'
-vim.opt.completeopt = 'menu,longest,noinsert,popup'
+-- vim.opt.completeopt = 'menu,longest,noinsert,popup'
 
 -- vim.cmd.colorscheme('habamax')
 
@@ -56,16 +56,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     -- Enable completion triggered by <c-x><c-o>
+    --[[
     if client.server_capabilities.completionProvider then
       vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
+    ]]
+    -- Enable navigation with <C-]>
     if client.server_capabilities.definitionProvider then
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
 
     -- Disable advanced syntax highlighting
     -- client.server_capabilities.semanticTokensProvider = nil
+    -- Disable inlay hints that might look like code
     vim.lsp.inlay_hint.enable(false)
+     -- Set rounded borders to separate from background
+    require('lspconfig.ui.windows').default_options.border = 'rounded'
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -105,18 +113,6 @@ vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
   end
 })
 
--- Set popup window background
-vim.api.nvim_create_autocmd('OptionSet', {
-  pattern = 'background',
-  callback = function()
-    if vim.o.background == 'light' then
-      vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 255 })
-    else
-      vim.api.nvim_set_hl(0, 'NormalFloat', { ctermbg = 232 })
-    end
-  end
-})
-
 -- Telescope shortcuts
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -127,3 +123,49 @@ vim.keymap.set('n', '<leader>fk', builtin.keymaps, {})
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, {})
 vim.keymap.set('n', '<leader>fs', builtin.lsp_workspace_symbols, {})
 vim.keymap.set('n', '<leader>fd', builtin.lsp_definitions, {})
+
+-- CMP options
+local cmp = require('cmp')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.snippet.expand(args.body)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    -- Use buffer contents for autocompletion
+    -- { name = 'buffer' },
+  })
+})
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
+-- Remap omnicompletion function
+vim.keymap.set("i", vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), function()
+  cmp.complete()
+end)
