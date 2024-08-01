@@ -17,61 +17,24 @@ vim.opt.expandtab = true
 
 vim.opt.wildmode = 'longest:full,full'
 -- vim.opt.wildoptions = 'pum,tagfile'
+-- TODO: switch from preview to popup when nvim adds options to change popup settings
 vim.opt.completeopt = 'menu,longest,noinsert,preview'
 
 -- vim.cmd.colorscheme('habamax')
 
--- Completion configuration
-local cmp = require('cmp')
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.snippet.expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  }),
-  matching = { disallow_symbol_nonprefix_matching = false }
-})
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 lspconfig.gopls.setup({
   settings = {
     gopls = {
       staticcheck = true,
       gofumpt = true,
       -- Changes to advanced syntax highligting
-      -- semanticTokens = true,
+      semanticTokens = true,
       usePlaceholders = true,
     },
-  },
-  capabilities = capabilities,
+  }
 })
 lspconfig.rust_analyzer.setup{
   settings = {
@@ -79,30 +42,38 @@ lspconfig.rust_analyzer.setup{
       diagnostics = {
         enable = true,
       },
+      inlayHints = true,
     }
-  },
-  capabilities = capabilities,
+  }
 }
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.diagnostic.config({ float = { border = 'single' } })
+require('lspconfig.ui.windows').default_options.border = 'single'
+-- Restore nvim 0.9 (classic vim) style for popups and floating windows
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     -- Enable completion triggered by <c-x><c-o>
-    --[[
     if client.server_capabilities.completionProvider then
       vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
     if client.server_capabilities.definitionProvider then
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
-    ]]
+
+    -- Set rounded borders to separate from background
+    require('lspconfig.ui.windows').default_options.border = 'rounded'
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 
     -- Disable advanced syntax highlighting
-    client.server_capabilities.semanticTokensProvider = nil
+    -- client.server_capabilities.semanticTokensProvider = nil
+    vim.lsp.inlay_hint.enable(false)
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -110,7 +81,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', '<C-w>gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
