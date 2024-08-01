@@ -21,6 +21,41 @@ vim.opt.completeopt = 'menu,longest,noinsert,preview'
 
 -- vim.cmd.colorscheme('habamax')
 
+-- Completion configuration
+local cmp = require('cmp')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.snippet.expand(args.body)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
@@ -36,6 +71,7 @@ lspconfig.gopls.setup({
       usePlaceholders = true,
     },
   },
+  capabilities = capabilities,
 })
 lspconfig.rust_analyzer.setup{
   settings = {
@@ -44,7 +80,8 @@ lspconfig.rust_analyzer.setup{
         enable = true,
       },
     }
-  }
+  },
+  capabilities = capabilities,
 }
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -55,12 +92,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     -- Enable completion triggered by <c-x><c-o>
+    --[[
     if client.server_capabilities.completionProvider then
       vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
     if client.server_capabilities.definitionProvider then
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
+    ]]
 
     -- Disable advanced syntax highlighting
     client.server_capabilities.semanticTokensProvider = nil
