@@ -7,7 +7,6 @@ For language support and other features, plugins are required:
 * [lspconfig](https://github.com/neovim/nvim-lspconfig)
 * [telescope](https://github.com/nvim-telescope/telescope.nvim) and its dependencies:
   * [plenary](https://github.com/nvim-lua/plenary.nvim)
-* [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 Install them by running
 
@@ -15,11 +14,6 @@ Install them by running
 git clone --depth 1 https://github.com/neovim/nvim-lspconfig.git ~/.config/nvim/pack/plugins/start/lspconfig
 git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git ~/.config/nvim/pack/plugins/start/plenary.nvim
 git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.config/nvim/pack/plugins/start/telescope.nvim
-git clone --depth 1 https://github.com/hrsh7th/nvim-cmp.git ~/.config/nvim/pack/plugins/start/nvim-cmp
-git clone --depth 1 https://github.com/hrsh7th/cmp-nvim-lsp.git ~/.config/nvim/pack/plugins/start/cmp-nvim-lsp
-git clone --depth 1 https://github.com/hrsh7th/cmp-buffer.git ~/.config/nvim/pack/plugins/start/cmp-buffer
-git clone --depth 1 https://github.com/hrsh7th/cmp-cmdline.git ~/.config/nvim/pack/plugins/start/cmp-cmdline
-git clone --depth 1 https://github.com/hrsh7th/cmp-path.git ~/.config/nvim/pack/plugins/start/cmp-path
 ```
 
 ## Go
