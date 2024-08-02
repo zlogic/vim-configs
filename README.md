@@ -20,7 +20,6 @@ git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.conf
 ```shell
 git clone --depth 1 https://github.com/hrsh7th/nvim-cmp.git ~/.config/nvim/pack/plugins/start/nvim-cmp
 git clone --depth 1 https://github.com/hrsh7th/cmp-nvim-lsp.git ~/.config/nvim/pack/plugins/start/cmp-nvim-lsp
-git clone --depth 1 https://github.com/hrsh7th/cmp-buffer.git ~/.config/nvim/pack/plugins/start/cmp-buffer
 git clone --depth 1 https://github.com/hrsh7th/cmp-path.git ~/.config/nvim/pack/plugins/start/cmp-path
 git clone --depth 1 https://github.com/hrsh7th/cmp-cmdline.git ~/.config/nvim/pack/plugins/start/cmp-cmdline
 ```
