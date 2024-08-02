@@ -32,7 +32,7 @@ lspconfig.gopls.setup({
       staticcheck = true,
       gofumpt = true,
       -- Changes to advanced syntax highligting
-      semanticTokens = true,
+      -- semanticTokens = true,
       usePlaceholders = true,
     },
   },
@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- Disable advanced syntax highlighting
-    -- client.server_capabilities.semanticTokensProvider = nil
+    client.server_capabilities.semanticTokensProvider = nil
     -- Disable inlay hints that might look like code
     vim.lsp.inlay_hint.enable(false)
      -- Set rounded borders to separate from background
@@ -129,6 +129,15 @@ vim.keymap.set('n', '<leader>fk', builtin.keymaps, {})
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, {})
 vim.keymap.set('n', '<leader>fs', builtin.lsp_workspace_symbols, {})
 vim.keymap.set('n', '<leader>fd', builtin.lsp_definitions, {})
+vim.keymap.set('n', '<leader>fts', builtin.treesitter, {})
+
+-- Tree-sitter
+require('nvim-treesitter.configs').setup {
+  ensure_installed = {"go", "rust", "markdown"},
+  highlight = {
+    enable = true,
+  },
+}
 
 -- CMP options
 local cmp = require('cmp')

@@ -8,6 +8,7 @@ For language support and other features, plugins are required:
 * [telescope](https://github.com/nvim-telescope/telescope.nvim) and its dependencies:
   * [plenary](https://github.com/nvim-lua/plenary.nvim)
 * [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+* [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 
 Install them by running
 
@@ -15,6 +16,7 @@ Install them by running
 git clone --depth 1 https://github.com/neovim/nvim-lspconfig.git ~/.config/nvim/pack/plugins/start/lspconfig
 git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git ~/.config/nvim/pack/plugins/start/plenary.nvim
 git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.config/nvim/pack/plugins/start/telescope.nvim
+git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git ~/.config/nvim/pack/plugins/start/nvim-treesitter
 ```
 
 ```shell
