@@ -22,7 +22,7 @@ set ruler
 syntax enable
 
 " Enable lsp plugin
-packadd lsp
+packadd vim-lsp
 
 " Enable filetype plugins
 filetype plugin indent on
@@ -42,67 +42,41 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 " set completepopup=align:menu,border:off
 
 " Set LSP settings
+let g:lsp_use_native_client = 1
+let g:lsp_diagnostics_virtual_text_enabled = 1
+let g:lsp_document_symbol_detail = 1
+" let g:lsp_diagnostics_virtual_text_prefix = " ‣ "
 " The default diagVirtualTextAlign: 'above' option needs
 " a fix from https://github.com/vim/vim/issues/14049
 " (or just a newer Vim version?)
 " Also, aligning below seems to offset the cursor line...
-" Add this to get things like function parameter names:
-" showInlayHints: v:true,
-call LspOptionsSet(#{
-    \hoverInPreview: v:false,
-    \autoComplete: v:false,
-    \omniComplete: v:true,
-    \showDiagWithVirtualText: v:false,
-    \ignoreMissingServer: v:true,
-    \completionMatcher: 'icase',
-\})
-call LspAddServer([#{
-    \name: 'rustanalyzer',
-    \filetype: ['rust'],
-    \path: 'rust-analyzer',
-    \args: [],
-    \syncInit: v:true,
-\}])
-call LspAddServer([#{name: 'gopls',
-    \filetype: ['go', 'gomod'],
-    \path: expand('$HOME/go/bin/gopls'),
-    \args: ['serve'],
-    \syncInit: v:true,
-    \workspaceConfig: #{
-    \    gopls: #{
-    \        staticcheck: v:true,
-    \        gofumpt: v:true,
-    \    }
-    \}
-\}])
 
 function! s:on_lsp_buffer_attached() abort
     " Shortcuts
     "nmap <silent> <C-]> <Cmd>LspGotoDefinition<CR>
     "nmap <silent> <C-W><C-]> :tab LspGotoDefinition<CR>
-    nnoremap <buffer> gd <Cmd>LspGotoDefinition<CR>
-    nnoremap <buffer> gD <Cmd>LspGotoDeclaration<CR>
-    nnoremap <buffer> <C-W>gd :tab LspGotoDefinition<CR>
-    nnoremap <buffer> gi <Cmd>LspGotoImpl<CR>
-    nnoremap <buffer> gr <Cmd>LspShowReferences<CR>
-    nnoremap <buffer> <space>pr <Cmd>LspPeekReferences<CR>
-    nnoremap <buffer> [d <Cmd>LspDiag prev<CR>
-    nnoremap <buffer> ]d <Cmd>LspDiag next<CR>
-    nnoremap <buffer> <space>ca <Cmd>LspCodeAction<CR>
-    nnoremap <buffer> <space>rn <Cmd>LspRename<CR>
-    nnoremap <buffer> <space>e <Cmd>LspDiagCurrent<CR>
-    nnoremap <buffer> <space>q <Cmd>LspDiagShow<CR>
+    nnoremap <buffer> gd <plug>(lsp-definition)
+    nnoremap <buffer> gD <plug>(lsp-declaration)
+    nnoremap <buffer> <C-W>gd :tab LspDefinition<CR>
+    nnoremap <buffer> gi <plug>(lsp-implementation)
+    nnoremap <buffer> gr <plug>(lsp-references)
+    "nnoremap <buffer> <space>pr <Cmd>LspPeekReferences<CR>
+    nnoremap <buffer> [d <plug>(lsp-previous-diagnostic)
+    nnoremap <buffer> ]d <plug>(lsp-next-diagnostic)
+    nnoremap <buffer> <space>ca <plug>(lsp-code-action)
+    nnoremap <buffer> <space>rn <plug>(lsp-rename)
+    "nnoremap <buffer> <space>e <Cmd>LspDiagCurrent<CR>
+    nnoremap <buffer> <space>q <plug>(lsp-document-diagnostics)
 
     " Enable hover on K
     set keywordprg=:LspHover
     " Go to definition with LSP
-    setlocal tagfunc=lsp#lsp#TagFunc
+    setlocal tagfunc=lsp#tagfunc
     " Set default formatter on gq
-    setlocal formatexpr=lsp#lsp#FormatExpr()
+    " setlocal formatexpr=lsp#lsp#FormatExpr()
     " Format on save
-    augroup lsp_format
-	autocmd! BufWritePre *.go,*.rs :LspFormat
-    augroup END
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
 
     " Close preview window after completion
     au CompleteDone * pclose
@@ -110,7 +84,7 @@ endfunction
 
 augroup lsp_install
     au!
-    autocmd User LspAttached call s:on_lsp_buffer_attached()
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_attached()
 augroup END
 
 " Go options
