@@ -4,8 +4,7 @@ This repo contains my `.vim` directory.
 
 For language support and other features, plugins are required:
 
-* [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
-* ~~[lsp](https://github.com/yegappan/lsp)~~
+* [lsp](https://github.com/yegappan/lsp)
 * ~~[ALE](https://github.com/dense-analysis/ale)~~
 * ~~[vim-go](https://github.com/fatih/vim-go)~~
 * [rust-vim](https://github.com/rust-lang/rust.vim)
@@ -15,8 +14,7 @@ Install them by running
 
 ```shell
 git clone --depth 1 https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
-git clone --depth 1 https://github.com/prabirshrestha/vim-lsp.git ~/.vim/pack/downloads/opt/vim-lsp
-git clone --depth 1 https://github.com/mattn/vim-lsp-settings.git  ~/.vim/pack/downloads/opt/vim-lsp-settings
+git clone --depth 1 https://github.com/yegappan/lsp.git ~/.vim/pack/downloads/opt/lsp
 ```
 
 ## Go
