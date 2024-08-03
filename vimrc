@@ -23,6 +23,7 @@ syntax enable
 
 " Enable lsp plugin
 packadd vim-lsp
+packadd vim-lsp-settings
 
 " Enable filetype plugins
 filetype plugin indent on
@@ -43,13 +44,24 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 
 " Set LSP settings
 let g:lsp_use_native_client = 1
-let g:lsp_diagnostics_virtual_text_enabled = 1
 let g:lsp_document_symbol_detail = 1
-" let g:lsp_diagnostics_virtual_text_prefix = " ‣ "
-" The default diagVirtualTextAlign: 'above' option needs
-" a fix from https://github.com/vim/vim/issues/14049
+" Do not highlight current symbol
+let g:lsp_document_highlight_enabled = 0
+" Do not show actions on every line (too distracting)
+let g:lsp_document_code_action_signs_enabled = 0
+" let g:lsp_diagnostics_echo_cursor = 1
+" The 'above' option needs a fix from https://github.com/vim/vim/issues/14049
 " (or just a newer Vim version?)
 " Also, aligning below seems to offset the cursor line...
+let g:lsp_diagnostics_virtual_text_enabled = 1
+let g:lsp_diagnostics_virtual_text_align = 'after'
+let g:lsp_diagnostics_virtual_text_wrap = 'wrap'
+let g:lsp_inlay_hints_enabled = 1
+
+" Set path to support gopls
+let g:lsp_settings = {
+    \'gopls': {'cmd': [$HOME . '/go/bin/gopls']}
+\}
 
 function! s:on_lsp_buffer_attached() abort
     " Shortcuts
@@ -60,20 +72,22 @@ function! s:on_lsp_buffer_attached() abort
     nnoremap <buffer> <C-W>gd :tab LspDefinition<CR>
     nnoremap <buffer> gi <plug>(lsp-implementation)
     nnoremap <buffer> gr <plug>(lsp-references)
-    "nnoremap <buffer> <space>pr <Cmd>LspPeekReferences<CR>
     nnoremap <buffer> [d <plug>(lsp-previous-diagnostic)
     nnoremap <buffer> ]d <plug>(lsp-next-diagnostic)
     nnoremap <buffer> <space>ca <plug>(lsp-code-action)
     nnoremap <buffer> <space>rn <plug>(lsp-rename)
-    "nnoremap <buffer> <space>e <Cmd>LspDiagCurrent<CR>
     nnoremap <buffer> <space>q <plug>(lsp-document-diagnostics)
 
+    " Set autocomplete omnifunc
+    set omnifunc=lsp#complete
     " Enable hover on K
     set keywordprg=:LspHover
     " Go to definition with LSP
     setlocal tagfunc=lsp#tagfunc
     " Set default formatter on gq
-    " setlocal formatexpr=lsp#lsp#FormatExpr()
+    setlocal formatexpr=lsp#formatexpr()
+    " Set commenting function
+    setlocal opfunc=lsp#internal#document_range_formatting#opfunc
     " Format on save
     let g:lsp_format_sync_timeout = 1000
     autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
