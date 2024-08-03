@@ -55,6 +55,8 @@ call LspOptionsSet(#{
     \showDiagWithVirtualText: v:false,
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
+    \showInlayHints: v:true,
+    \snippetSupport: v:true
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
@@ -72,6 +74,7 @@ call LspAddServer([#{name: 'gopls',
     \    gopls: #{
     \        staticcheck: v:true,
     \        gofumpt: v:true,
+    \        hints: #{ assignVariableTypes: v:true, constantValues: v:true, parameterNames: v:true },
     \    }
     \}
 \}])
