@@ -55,7 +55,6 @@ call LspOptionsSet(#{
     \showDiagWithVirtualText: v:false,
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
-    \showInlayHints: v:true,
     \snippetSupport: v:true
 \})
 call LspAddServer([#{
