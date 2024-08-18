@@ -19,6 +19,10 @@ vim.opt.expandtab = true
 -- vim.opt.wildoptions = 'pum,tagfile'
 -- vim.opt.completeopt = 'menu,longest,noinsert,popup'
 
+-- Avoid printing garbage when mouse scrolling, using values from Linux (macOS causes nvim-cmp to print garbage)
+vim.opt.ttimeout = true
+vim.opt.ttimeoutlen = 100
+
 -- vim.cmd.colorscheme('habamax')
 
 -- LSP configuration
