@@ -1,5 +1,6 @@
 -- Behave like vim (middle-click paste)
-vim.opt.mouse = ''
+-- Disabled because Neovim doesn't handle rapid input of ESC characters well
+-- vim.opt.mouse = ''
 vim.opt.belloff = ''
 -- vim.opt.errorbells = true
 vim.opt.visualbell = true
