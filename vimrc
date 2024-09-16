@@ -52,7 +52,7 @@ let g:lsp_document_highlight_enabled = 0
 " Do not show actions on every line (too distracting)
 let g:lsp_document_code_action_signs_enabled = 0
 " let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_float_cursor = 0
 " The 'above' option needs a fix from https://github.com/vim/vim/issues/14049
 " (or just a newer Vim version?)
 " Also, aligning below seems to offset the cursor line...
