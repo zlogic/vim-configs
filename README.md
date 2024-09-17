@@ -24,6 +24,7 @@ git clone --depth 1 https://github.com/hrsh7th/nvim-cmp.git ~/.config/nvim/pack/
 git clone --depth 1 https://github.com/hrsh7th/cmp-nvim-lsp.git ~/.config/nvim/pack/plugins/start/cmp-nvim-lsp
 git clone --depth 1 https://github.com/hrsh7th/cmp-path.git ~/.config/nvim/pack/plugins/start/cmp-path
 git clone --depth 1 https://github.com/hrsh7th/cmp-cmdline.git ~/.config/nvim/pack/plugins/start/cmp-cmdline
+git clone --depth 1 https://github.com/hrsh7th/cmp-nvim-lsp-signature-help ~/.config/nvim/pack/plugins/start/nvim-lsp-signature-help
 ```
 
 ## Go
@@ -37,7 +38,7 @@ go install golang.org/x/tools/gopls@latest
 In addition, the [staticcheck](https://github.com/dominikh/go-tools) linter should be installed as well:
 
 ```shell
-go install honnef.co/go/tools/cmd/staticcheck@2023.1.7
+go install honnef.co/go/tools/cmd/staticcheck@2024.1.1
 ```
 
 ## Rust

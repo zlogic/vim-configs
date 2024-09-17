@@ -19,25 +19,30 @@ vim.opt.expandtab = true
 -- vim.opt.wildoptions = 'pum,tagfile'
 -- vim.opt.completeopt = 'menu,longest,noinsert,popup'
 
--- Avoid printing garbage when mouse scrolling, using values from Linux (macOS causes nvim-cmp to print garbage)
-vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 100
-
 -- vim.cmd.colorscheme('habamax')
 
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Snippets
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+  return vim.snippet.active({ direction = 1 }) and '<cmd>lua vim.snippet.jump(1)<cr>' or '<Tab>'
+end, { expr = true, silent = true })
+vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
+  return vim.snippet.active({ direction = -1 }) and '<cmd>lua vim.snippet.jump(-1)<cr>' or '<S-Tab>'
+end, { expr = true, silent = true })
+
 lspconfig.gopls.setup({
   settings = {
     gopls = {
       staticcheck = true,
       gofumpt = true,
-      -- Changes to advanced syntax highligting
+      -- Change to advanced syntax highlighting
       -- semanticTokens = true,
-      usePlaceholders = true,
+      usePlaceholders = false,
     },
   },
   capabilities = capabilities,
@@ -164,6 +169,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' }
   }, {
     -- Use buffer contents for autocompletion
     -- { name = 'buffer' },
