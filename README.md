@@ -41,10 +41,22 @@ In addition, the [staticcheck](https://github.com/dominikh/go-tools) linter shou
 go install honnef.co/go/tools/cmd/staticcheck@2024.1.1
 ```
 
+To install the treesitter modules, run:
+
+```vim
+:TSInstall go
+```
+
 ## Rust
 
 Rust requires the [rust-analyzer](https://github.com/rust-lang/rust-analyzer) to be installed.
 
 ```shell
 rustup component add rust-analyzer
+```
+
+To install the treesitter modules, run:
+
+```vim
+:TSInstall rust
 ```

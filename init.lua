@@ -143,7 +143,6 @@ vim.keymap.set('n', '<leader>fts', builtin.treesitter, {})
 
 -- Tree-sitter
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"go", "rust", "markdown"},
   highlight = {
     enable = true,
   },
