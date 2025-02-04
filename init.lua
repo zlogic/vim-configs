@@ -23,10 +23,6 @@ vim.opt.completeopt = 'menu,menuone,popup,noselect,noinsert'
 
 -- vim.cmd.colorscheme('habamax')
 
--- Ensure preview windows are more visible against the background.
--- Can probably be replaced with https://github.com/neovim/neovim/pull/25541
-vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
-
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
 local lspconfig = require('lspconfig')
@@ -82,13 +78,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
 
-    --[[
-    orig_make_floating_popup_options = vim.lsp.util.make_floating_popup_options
-    vim.lsp.util.make_floating_popup_options = function (width, height, opts)
-        opts.border = 'double'
-        return orig_make_floating_popup_options(width, height, opts)
-    end
-    ]]
     -- Enable autotrigger completion when NeoVim 0.11 becomes available.
     -- vim.lsp.completion.enable(true, args.data.client_id, args.buf, {autotrigger = true})
 
@@ -98,8 +87,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       buffer = args.buf,
       callback = function (args)
         local info = vim.fn.complete_info({'selected'})
-        local floating_winnr = info.preview_winid
-        vim.api.nvim_win_set_config(floating_winnr, { border = 'rounded' })
+        local floating_winnr = info['preview_winid']
+        if floating_winnr ~= nil and vim.api.nvim_win_is_valid(floating_winnr) then
+          local opts = vim.api.nvim_win_get_config(floating_winnr)
+          opts.border = 'single'
+          opts.width = opts.width - 2
+          opts.height = opts.height - 2
+          vim.api.nvim_win_set_config(floating_winnr, opts)
+        end
       end
     })
 
@@ -109,8 +104,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.lsp.inlay_hint.enable(false)
      -- Set rounded borders to separate from background
     require('lspconfig.ui.windows').default_options.border = 'rounded'
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
