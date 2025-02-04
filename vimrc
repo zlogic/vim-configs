@@ -36,25 +36,22 @@ set wildmode=longest:full,full
 " nnoremap YY "+yy
 
 " Show autocomplete description in preview pane
-set completeopt=menu,menuone,preview,noselect,noinsert
+" set completeopt=menu,menuone,preview,noselect,noinsert
 " Show symbol information in a popup window
-" set completeopt=menu,menuone,popup,noselect,noinsert
-" set completepopup=align:menu,border:off
+set completeopt=menu,menuone,popup,noselect,noinsert
+set completepopup=align:menu,border:off
 
 " Set LSP settings
-" The default diagVirtualTextAlign: 'above' option needs
-" a fix from https://github.com/vim/vim/issues/14049
-" (or just a newer Vim version?)
-" Also, aligning below seems to offset the cursor line...
+" Aligning below seems to offset the cursor line, possibly because of Unicode issues.
 " Add this to get things like function parameter names:
 " showInlayHints: v:true,
 call LspOptionsSet(#{
     \hoverInPreview: v:false,
     \autoComplete: v:false,
     \omniComplete: v:true,
-    \showDiagWithVirtualText: v:false,
+    \showDiagWithVirtualText: v:true,
     \ignoreMissingServer: v:true,
-    \completionMatcher: 'icase',
+    \completionMatcher: 'fuzzy',
     \snippetSupport: v:true
 \})
 call LspAddServer([#{
