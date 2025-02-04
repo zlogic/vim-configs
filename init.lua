@@ -16,11 +16,16 @@ vim.opt.shiftwidth = 4
 -- vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
--- vim.opt.wildmode = 'longest:full,full'
--- vim.opt.wildoptions = 'pum,tagfile'
--- vim.opt.completeopt = 'menu,longest,noinsert,popup'
+vim.opt.wildmode = 'longest:full,full'
+vim.opt.wildoptions = 'pum,tagfile'
+-- In NeoVim 0.11, add the fuzzy option.
+vim.opt.completeopt = 'menu,menuone,popup,noselect,noinsert'
 
 -- vim.cmd.colorscheme('habamax')
+
+-- Ensure preview windows are more visible against the background.
+-- Can probably be replaced with https://github.com/neovim/neovim/pull/25541
+vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
 
 -- LSP configuration
 vim.env.PATH = vim.env.PATH .. ':' .. vim.env.HOME ..  '/go/bin/'
@@ -70,17 +75,33 @@ require('lspconfig.ui.windows').default_options.border = 'single'
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(args)
+
     local client = vim.lsp.get_client_by_id(args.data.client_id)
-    -- Enable completion triggered by <c-x><c-o>
-    --[[
-    if client.server_capabilities.completionProvider then
-      vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-    end
-    ]]
     -- Enable navigation with <C-]>
     if client.server_capabilities.definitionProvider then
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
+
+    --[[
+    orig_make_floating_popup_options = vim.lsp.util.make_floating_popup_options
+    vim.lsp.util.make_floating_popup_options = function (width, height, opts)
+        opts.border = 'double'
+        return orig_make_floating_popup_options(width, height, opts)
+    end
+    ]]
+    -- Enable autotrigger completion when NeoVim 0.11 becomes available.
+    -- vim.lsp.completion.enable(true, args.data.client_id, args.buf, {autotrigger = true})
+
+    -- Temporary workaround to force rounded borders in omnifunc.
+    -- Remove once this is fixed in https://github.com/neovim/neovim/pull/25541.
+    vim.api.nvim_create_autocmd('CompleteChanged', {
+      buffer = args.buf,
+      callback = function (args)
+        local info = vim.fn.complete_info({'selected'})
+        local floating_winnr = info.preview_winid
+        vim.api.nvim_win_set_config(floating_winnr, { border = 'rounded' })
+      end
+    })
 
     -- Disable advanced syntax highlighting
     client.server_capabilities.semanticTokensProvider = nil
@@ -147,50 +168,3 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
-
--- CMP options
-local cmp = require('cmp')
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.snippet.expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' }
-  }, {
-    -- Use buffer contents for autocompletion
-    -- { name = 'buffer' },
-  })
-})
-cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    -- { name = 'buffer' }
-  }
-})
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  }),
-  matching = { disallow_symbol_nonprefix_matching = false }
-})
--- Remap omnicompletion function
-vim.keymap.set("i", vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), function()
-  cmp.complete()
-end)
