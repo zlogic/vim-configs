@@ -92,7 +92,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
           local opts = vim.api.nvim_win_get_config(floating_winnr)
           opts.border = 'single'
           opts.width = opts.width - 2
-          opts.height = opts.height - 2
           vim.api.nvim_win_set_config(floating_winnr, opts)
         end
       end
