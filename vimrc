@@ -51,7 +51,7 @@ call LspOptionsSet(#{
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
     \ignoreMissingServer: v:true,
-    \completionMatcher: 'fuzzy',
+    \completionMatcher: 'icase',
     \snippetSupport: v:true
 \})
 call LspAddServer([#{
