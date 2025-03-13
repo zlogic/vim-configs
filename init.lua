@@ -45,6 +45,10 @@ lspconfig.gopls.setup({
       -- Change to advanced syntax highlighting
       -- semanticTokens = true,
       usePlaceholders = false,
+      -- Enable additional code lenses
+      -- codelenses = {
+      --   test = true
+      -- }
     },
   },
   capabilities = capabilities,

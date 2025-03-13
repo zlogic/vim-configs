@@ -38,7 +38,7 @@ go install golang.org/x/tools/gopls@latest
 In addition, the [staticcheck](https://github.com/dominikh/go-tools) linter should be installed as well:
 
 ```shell
-go install honnef.co/go/tools/cmd/staticcheck@2024.1.1
+go install honnef.co/go/tools/cmd/staticcheck@2025.1.1
 ```
 
 To install the treesitter modules, run:
