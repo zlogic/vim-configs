@@ -38,7 +38,7 @@ set wildmode=longest:full,full
 " Show autocomplete description in preview pane
 " set completeopt=menu,menuone,preview,noselect,noinsert
 " Show symbol information in a popup window
-set completeopt=menu,menuone,popup,noselect,noinsert
+set completeopt=menu,menuone,preview,noselect,noinsert,fuzzy
 set completepopup=align:menu,border:off
 
 " Set LSP settings
@@ -50,6 +50,7 @@ call LspOptionsSet(#{
     \autoComplete: v:false,
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
+    \diagVirtualTextAlign: 'after',
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
     \snippetSupport: v:true
