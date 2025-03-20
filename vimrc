@@ -38,7 +38,7 @@ set wildmode=longest:full,full
 " Show autocomplete description in preview pane
 " set completeopt=menu,menuone,preview,noselect,noinsert
 " Show symbol information in a popup window
-set completeopt=menu,menuone,preview,noselect,noinsert,fuzzy
+set completeopt=menu,menuone,popup,noselect,noinsert,fuzzy
 set completepopup=align:menu,border:off
 
 " Set LSP settings
@@ -53,7 +53,8 @@ call LspOptionsSet(#{
     \diagVirtualTextAlign: 'after',
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
-    \snippetSupport: v:true
+    \snippetSupport: v:true,
+    \condensedCompletionMenu: v:true
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
