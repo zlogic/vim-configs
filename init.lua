@@ -22,6 +22,9 @@ vim.opt.completeopt = 'menu,menuone,popup,noselect,noinsert,fuzzy'
 
 -- vim.cmd.colorscheme('habamax')
 
+-- Monitor external FS changes (e.g. from git)
+vim.o.autoread = true
+
 -- LSP configuration
 vim.lsp.config('*', {
   capabilities = {
