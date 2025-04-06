@@ -79,8 +79,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
     })
 
-    -- Disable advanced syntax highlighting, as it duplicates tree-sitter
-    client.server_capabilities.semanticTokensProvider = nil
     -- Disable inlay hints that might look like code
     -- vim.lsp.inlay_hint.enable(true)
     -- Set rounded borders to separate from background
