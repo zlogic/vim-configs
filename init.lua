@@ -79,6 +79,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
     })
 
+    if client.server_capabilities.semanticTokensProvider then
+      vim.treesitter.stop(args.buf)
+    end
     -- Disable inlay hints that might look like code
     -- vim.lsp.inlay_hint.enable(true)
     -- Set rounded borders to separate from background

@@ -15,6 +15,6 @@ return {
   },
   on_init = function(client, _)
     -- Disable advanced syntax highlighting, as it duplicates tree-sitter
-    client.server_capabilities.semanticTokensProvider = nil
+    -- client.server_capabilities.semanticTokensProvider = nil
   end
 }
