@@ -79,8 +79,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
     })
 
+    -- Disable tree-sitter if semantic token provider is enabled
+    -- At the moment, only [tree-sitter + semantic tokens] or only [semantic-tokens]
+    -- work correctly - see https://github.com/neovim/neovim/issues/33358.
     if client.server_capabilities.semanticTokensProvider then
-      vim.treesitter.stop(args.buf)
+      -- vim.treesitter.stop(args.buf)
     end
     -- Disable inlay hints that might look like code
     -- vim.lsp.inlay_hint.enable(true)

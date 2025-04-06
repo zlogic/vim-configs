@@ -18,6 +18,7 @@ return {
   },
   on_init = function(client, _)
     -- Disable advanced syntax highlighting, as it duplicates tree-sitter
+    -- This will only work when https://github.com/neovim/neovim/issues/33358 is addressed
     -- client.server_capabilities.semanticTokensProvider = nil
   end
 }
