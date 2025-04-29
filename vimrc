@@ -77,11 +77,6 @@ call LspAddServer([#{name: 'gopls',
     \}
 \}])
 
-let g:LspTypeHierarchyPopupBorder = []
-let g:LspPeekPopupBorder = []
-let g:LspSymbolMenuPopupBorder= []
-let g:LspTypeHierarchyPopupBorder= []
-
 function! s:on_lsp_buffer_attached() abort
     " Shortcuts
     "nmap <silent> <C-]> <Cmd>LspGotoDefinition<CR>
