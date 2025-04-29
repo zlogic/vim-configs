@@ -50,7 +50,7 @@ call LspOptionsSet(#{
     \autoComplete: v:false,
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
-    \diagVirtualTextAlign: 'after',
+    \diagVirtualTextAlign: 'below',
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
     \snippetSupport: v:true,
@@ -76,6 +76,11 @@ call LspAddServer([#{name: 'gopls',
     \    }
     \}
 \}])
+
+let g:LspTypeHierarchyPopupBorder = []
+let g:LspPeekPopupBorder = []
+let g:LspSymbolMenuPopupBorder= []
+let g:LspTypeHierarchyPopupBorder= []
 
 function! s:on_lsp_buffer_attached() abort
     " Shortcuts
