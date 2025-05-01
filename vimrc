@@ -53,7 +53,8 @@ call LspOptionsSet(#{
     \diagVirtualTextAlign: 'below',
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
-    \snippetSupport: v:true,
+    \snippetSupport: v:false,
+    \semanticHighlight: v:false,
     \condensedCompletionMenu: v:true
 \})
 call LspAddServer([#{
@@ -72,6 +73,7 @@ call LspAddServer([#{name: 'gopls',
     \    gopls: #{
     \        staticcheck: v:true,
     \        gofumpt: v:true,
+    \        semanticTokens: v:false,
     \        hints: #{ assignVariableTypes: v:true, constantValues: v:true, parameterNames: v:true },
     \    }
     \}
