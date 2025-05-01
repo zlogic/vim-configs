@@ -10,6 +10,11 @@ return {
       -- Change to advanced syntax highlighting
       -- semanticTokens = true,
       usePlaceholders = false,
+      hints = {
+        assignVariableTypes = true,
+        constantValues = true,
+        parameterNames = true
+      },
       -- Enable additional code lenses
       -- codelenses = {
       --   test = true
