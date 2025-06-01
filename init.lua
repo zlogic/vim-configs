@@ -142,8 +142,11 @@ vim.keymap.set('n', '<leader>fd', builtin.lsp_definitions, {})
 vim.keymap.set('n', '<leader>fts', builtin.treesitter, {})
 
 -- Tree-sitter
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true,
-  },
-}
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'rust', 'go', 'markdown' },
+  callback = function()
+    vim.treesitter.start()
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
