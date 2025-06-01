@@ -18,6 +18,14 @@ git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git ~/.co
 
 There's a lot of useful LSP advice [in the Neovim's LSP guide](https://vonheikemen.github.io/devlog/tools/neovim-lsp-client-guide/)
 
+# Tree-sitter
+
+The main tree-sitter branch requires the [tree-sitter CLI](https://github.com/tree-sitter/tree-sitter) in the `$PATH`, and a C compiler.
+
+Those tools are only needed when running `:TSInstall` or `:TSUpdate`.
+
+To diagnose tree-sitter, run `:checkhealth nvim-treesitter`.
+
 ## Go
 
 Go requires the [gopls](https://github.com/golang/tools) language server to be installed.
