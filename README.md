@@ -16,6 +16,8 @@ git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.conf
 git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git ~/.config/nvim/pack/plugins/start/nvim-treesitter
 ```
 
+There's a lot of useful LSP advice [in the Neovim's LSP guide](https://vonheikemen.github.io/devlog/tools/neovim-lsp-client-guide/)
+
 ## Go
 
 Go requires the [gopls](https://github.com/golang/tools) language server to be installed.
