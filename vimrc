@@ -81,8 +81,6 @@ call LspAddServer([#{name: 'gopls',
 
 function! s:on_lsp_buffer_attached() abort
     " Shortcuts
-    "nmap <silent> <C-]> <Cmd>LspGotoDefinition<CR>
-    "nmap <silent> <C-W><C-]> :tab LspGotoDefinition<CR>
     nnoremap <buffer> gd <Cmd>LspGotoDefinition<CR>
     nnoremap <buffer> gD <Cmd>LspGotoDeclaration<CR>
     nnoremap <buffer> <C-W>gd :tab LspGotoDefinition<CR>
@@ -92,9 +90,20 @@ function! s:on_lsp_buffer_attached() abort
     nnoremap <buffer> [d <Cmd>LspDiag prev<CR>
     nnoremap <buffer> ]d <Cmd>LspDiag next<CR>
     nnoremap <buffer> <space>ca <Cmd>LspCodeAction<CR>
-    nnoremap <buffer> <space>rn <Cmd>LspRename<CR>
+    nnoremap <buffer> <space>cc <Cmd>LspCodeLens<CR>
+    nnoremap <buffer> grn <Cmd>LspRename<CR>
     nnoremap <buffer> <space>e <Cmd>LspDiagCurrent<CR>
     nnoremap <buffer> <space>q <Cmd>LspDiagShow<CR>
+    nnoremap <buffer> grr <Cmd>LspShowReferences<CR>
+    nnoremap <buffer> gra <Cmd>LspCodeAction<CR>
+    nnoremap <buffer> gri <Cmd>LspGotoImpl<CR>
+    nnoremap <buffer> gO <Cmd>LspDocumentSymbol<CR>
+    nnoremap <buffer> <C-S> <Cmd>LspShowSignature<CR>
+    inoremap <buffer> <C-S> <Cmd>LspShowSignature<CR>
+
+    nnoremap <buffer> <leader>fr <Cmd>LspPeekReferences<CR>
+    nnoremap <buffer> <leader>fs <Cmd>LspDocumentSymbol<CR>
+    nnoremap <buffer> <leader>fd <Cmd>LspPeekDefinition<CR>
 
     " Enable hover on K
     set keywordprg=:LspHover
