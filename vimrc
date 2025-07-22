@@ -75,6 +75,9 @@ call LspAddServer([#{name: 'gopls',
     \        gofumpt: v:true,
     \        semanticTokens: v:false,
     \        hints: #{ assignVariableTypes: v:true, constantValues: v:true, parameterNames: v:true },
+    \        analyses: #{
+    \            ST1000: v:false,
+    \        },
     \    }
     \}
 \}])
