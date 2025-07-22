@@ -15,6 +15,10 @@ return {
         constantValues = true,
         parameterNames = true
       },
+      analyses = {
+        -- Remove requirement for package annotations
+        ST1000 = false
+      }
       -- Enable additional code lenses
       -- codelenses = {
       --   test = true
