@@ -17,6 +17,7 @@ set smarttab
 set softtabstop=4
 
 set ruler
+set display+=lastline
 
 " Enable syntax highlighting
 syntax enable
