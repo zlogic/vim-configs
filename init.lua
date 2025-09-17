@@ -43,7 +43,6 @@ vim.lsp.enable({'rust-analyzer', 'gopls'})
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.diagnostic.config({
-  float = { border = 'single' },
   -- Show multiline diagnostics
   virtual_lines = true
   -- virtual_text = true
@@ -64,24 +63,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.completion.enable(true, args.data.client_id, args.buf, {autotrigger = true})
     end
 
-    -- Temporary workaround to force rounded borders in omnifunc.
-    -- Remove once this is fixed in https://github.com/neovim/neovim/pull/25541.
-    vim.api.nvim_create_autocmd('CompleteChanged', {
-      buffer = args.buf,
-      callback = function (args)
-        local info = vim.fn.complete_info({'selected'})
-        local floating_winnr = info['preview_winid']
-        if floating_winnr ~= nil and vim.api.nvim_win_is_valid(floating_winnr) then
-          local opts = vim.api.nvim_win_get_config(floating_winnr)
-          if opts.width > 2 then
-            opts.border = 'single'
-            opts.width = opts.width - 2
-            vim.api.nvim_win_set_config(floating_winnr, opts)
-          end
-        end
-      end
-    })
-
     -- Disable tree-sitter if semantic token provider is enabled
     -- At the moment, only [tree-sitter + semantic tokens] or only [semantic-tokens]
     -- work correctly - see https://github.com/neovim/neovim/issues/33358.
@@ -90,10 +71,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
     -- Disable inlay hints that might look like code
     -- vim.lsp.inlay_hint.enable(true)
-    -- Set rounded borders to separate from background
-    vim.o.winborder = 'rounded'
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
