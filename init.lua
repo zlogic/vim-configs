@@ -21,6 +21,9 @@ vim.opt.wildoptions = 'pum,tagfile'
 vim.opt.completeopt = 'menu,menuone,popup,noselect,noinsert,fuzzy'
 
 -- vim.cmd.colorscheme('habamax')
+-- vim.cmd.colorscheme('vim')
+-- Disable grey colors in light mode
+-- vim.opt.termguicolors = false
 
 -- Monitor external FS changes (e.g. from git)
 vim.o.autoread = true
