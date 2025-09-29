@@ -35,6 +35,11 @@ set wildmode=longest:full,full
 " Shortcuts
 " noremap Y "+y
 " nnoremap YY "+yy
+" vim-unimpaired shortcuts to match Neovim 0.11 default options
+nnoremap <silent> [q :<C-U>exe (v:count ? v:count : "")."cprevious"<CR>
+nnoremap <silent> ]q :<C-U>exe (v:count ? v:count : "")."cnext"<CR>
+nnoremap <silent> [l :<C-U>exe (v:count ? v:count : "")."lprevious"<CR>
+nnoremap <silent> ]l :<C-U>exe (v:count ? v:count : "")."lnext"<CR>
 
 " Show autocomplete description in preview pane
 " set completeopt=menu,menuone,preview,noselect,noinsert
@@ -56,7 +61,8 @@ call LspOptionsSet(#{
     \completionMatcher: 'icase',
     \snippetSupport: v:false,
     \semanticHighlight: v:false,
-    \condensedCompletionMenu: v:true
+    \condensedCompletionMenu: v:true,
+    \useQuickfixForLocations: v:false
 \})
 call LspAddServer([#{
     \name: 'rustanalyzer',
@@ -105,9 +111,9 @@ function! s:on_lsp_buffer_attached() abort
     nnoremap <buffer> <C-S> <Cmd>LspShowSignature<CR>
     inoremap <buffer> <C-S> <Cmd>LspShowSignature<CR>
 
-    nnoremap <buffer> <leader>fr <Cmd>LspPeekReferences<CR>
-    nnoremap <buffer> <leader>fs <Cmd>LspDocumentSymbol<CR>
-    nnoremap <buffer> <leader>fd <Cmd>LspPeekDefinition<CR>
+    " nnoremap <buffer> <leader>fr <Cmd>LspPeekReferences<CR>
+    " nnoremap <buffer> <leader>fs <Cmd>LspDocumentSymbol<CR>
+    " nnoremap <buffer> <leader>fd <Cmd>LspPeekDefinition<CR>
 
     " Enable hover on K
     set keywordprg=:LspHover
