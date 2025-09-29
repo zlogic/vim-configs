@@ -77,9 +77,13 @@ CTRL-Z		Switch to background mode (works anywhere in sh)
 
 :cope		Open the quickfix list with grep results
 :ccl		Close the quickfix list with grep results
+:lope		Open the location list with grep results
+:lcl		Close the location list with grep results
 
 :cn		Go to next item in the quickfix list
 :cp		Go to previous item in the quickfix list
+:ln		Go to next item in the location list
+:lp		Go to previous item in the location list
 
 CTRL-W <Enter>	Open item in new window
 
@@ -87,6 +91,8 @@ These options with with Neovim 0.11 |default-mappings| or vim-unimpaired.
 
 ]q	    Go to next item in the quickfix list
 [q	    Go to previous item in the quickfix list
+]l	    Go to next item in the location list
+[l	    Go to previous item in the location list
 
 ==============================================================================
 
@@ -138,6 +144,11 @@ Neovim LSP features
 		Useful for checking 'go.mod' dependencies
 
 <Space>cC	Refresh code lens
+
+To use inlay hints, run the following commands:
+
+Vim LSP	    ':LspInlayHints enable'
+Neovim LSP  ':lua vim.lsp.inlay_hint.enable(true)'
 
 ==============================================================================
 
