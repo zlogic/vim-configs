@@ -11,9 +11,9 @@ For language support and other features, plugins are required:
 Install them by running
 
 ```shell
-git clone --depth 1 --single-branch --branch main https://github.com/nvim-treesitter/nvim-treesitter.git ~/.config/nvim/pack/plugins/start/nvim-treesitter
 git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git ~/.config/nvim/pack/plugins/start/telescope.nvim
-git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter.git ~/.config/nvim/pack/plugins/start/nvim-treesitter
+git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git ~/.config/nvim/pack/plugins/start/plenary.nvim
+git clone --depth 1 --single-branch --branch main https://github.com/nvim-treesitter/nvim-treesitter.git ~/.config/nvim/pack/plugins/start/nvim-treesitter
 ```
 
 There's a lot of useful LSP advice [in the Neovim's LSP guide](https://vonheikemen.github.io/devlog/tools/neovim-lsp-client-guide/)
