@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client.server_capabilities.semanticTokensProvider then
       -- vim.treesitter.stop(args.buf)
     end
-    -- Disable inlay hints that might look like code
+    -- Disable inlay hints that might look like code (in 16-color terminals)
     -- vim.lsp.inlay_hint.enable(true)
 
     -- Buffer local mappings.
