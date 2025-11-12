@@ -56,7 +56,7 @@ call LspOptionsSet(#{
     \autoComplete: v:false,
     \omniComplete: v:true,
     \showDiagWithVirtualText: v:true,
-    \diagVirtualTextAlign: 'below',
+    \diagVirtualTextAlign: 'above',
     \ignoreMissingServer: v:true,
     \completionMatcher: 'icase',
     \snippetSupport: v:false,
