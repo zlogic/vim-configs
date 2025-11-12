@@ -48,51 +48,6 @@ vim.diagnostic.config({
   -- virtual_text = true
 })
 
--- Short versions of LSP completion kinds, based on yegappan/lsp
-local compactLspKind = {
-  't', -- Text
-  'm', -- Method
-  'f', -- Function
-  'C', -- Constructor
-  'F', -- Field
-  'v', -- Variable
-  'c', -- Class
-  'i', -- Interface
-  'M', -- Module
-  'p', -- Property
-  'u', -- Unit
-  'V', -- Value
-  'e', -- Enum
-  'k', -- Keyword
-  'S', -- Snippet
-  'C', -- Color
-  'f', -- File
-  'r', -- Reference
-  'F', -- Folder
-  'E', -- EnumMember
-  'd', -- Constant
-  's', -- Struct
-  'E', -- Event
-  'o', -- Operator
-  'T', -- TypeParameter
-}
-
-local function get_doc(item)
-  local doc = item.documentation
-  if not doc then
-    return ''
-  end
-  if type(doc) == 'string' then
-    return doc
-  end
-  if type(doc) == 'table' and type(doc.value) == 'string' then
-    return doc.value
-  end
-
-  vim.notify('invalid documentation value: ' .. vim.inspect(doc), vim.log.levels.WARN)
-  return ''
-end
-
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(args)
@@ -103,32 +58,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.bo[args.buf].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
 
-    -- Enable snippet completion and compact omnifunc
+    -- Enable snippet completion
     if client:supports_method('textDocument/completion') then
-      vim.lsp.completion.enable(true, args.data.client_id, args.buf, {
-        autotrigger = true,
-        convert = function(item)
-          local info = item.label or ''
-          if item.detail ~= nil and item.detail ~= '' then
-            info = info..'\n- - -\n'..item.detail
-          end
-          if item.documentation ~= '' then
-            if type(item.documentation) == 'string' then
-              info = info..'\n- - -\n'..item.documentation
-            end
-            if type(item.documentation) == 'table' and type(item.documentation.value) == 'string' then
-              info = info..'\n- - -\n'..item.documentation.value
-            end
-          end
-          return {
-            menu = '',
-            abbr = item.label:gsub('%b()', '()'),
-            detail = '',
-            kind = compactLspKind[item.kind],
-            info = info
-          }
-        end,
-      })
+      vim.lsp.completion.enable(true, args.data.client_id, args.buf, {autotrigger = true})
     end
 
     -- Disable tree-sitter if semantic token provider is enabled
